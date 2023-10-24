@@ -6,7 +6,17 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 var http = require("http");
 var https = require("https");
+
 app.use(express.static("public"));
+app.use(bodyParser.json());
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 const logger = {
   get: () => {
@@ -24,8 +34,13 @@ app.get("/", cors(), (req, res, next) => {
   next();
 });
 
-app.post("/query", cors(), (req, res, next) => {
+app.post("/query", cors(), (req, res) => {
+  console.log(`REQ::body -> ${Object.keys(req.body)}`);
+  // Object destructuring
+  const { name, email } = req.body; // makes me feel like a big boy developer!!
+  console.log(name, email);
   logger.post();
+
   res.send({ msg: "POST: /query -> message received! " });
 });
 
