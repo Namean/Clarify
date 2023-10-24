@@ -7,6 +7,78 @@
     <title>Clarify</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
+    <h1>
+      count:
+      <p class="count"></p>
+    </h1>
+    <input class="query" placeholder="query" name="query" />
+    <button class="submit" onclick="countHandler()">count++</button>
+    <script>
+      let count = 0;
+
+      function initalizeCount() {}
+
+      function displayCount() {
+        console.log(`count: ${count}`);
+      }
+
+      function incrementCount() {
+        count += 1;
+      }
+
+      function updateCountElementValue() {
+        let countElement = document.getElementsByClassName("count")[0];
+        countElement.innerText = count.toString();
+      }
+
+      function countHandler() {
+        incrementCount();
+        updateCountElementValue();
+        displayCount();
+      }
+
+      function post() {
+        xhr = new XMLHttpRequest();
+
+        const config = {
+          https: false,
+          host: true,
+        };
+        function configuration(config) {
+          let protocol;
+          let address = "localhost";
+
+          if (config.address) {
+            address = "localhost";
+          }
+
+          if (config.https === false) {
+            protocol = "http";
+          }
+
+          let configuration = {
+            url: protocol + address,
+          };
+          return configuration;
+        }
+
+        // xhr.open("POST", "https://localhost:443/", true);
+        xhr.open("POST", "http://localhost:3000/query", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(
+          JSON.stringify({
+            name: "extension 1",
+            email: "johndoe@example.com",
+          })
+        );
+      }
+
+      function main() {
+        console.log("sending POST request!", new Date().toLocaleTimeString());
+        post();
+      }
+
+      main();
+    </script>
   </body>
 </html>
