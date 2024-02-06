@@ -34,6 +34,20 @@ app.get("/", cors(), (req, res, next) => {
   next();
 });
 
+app.get("/employees", cors(), (req, res) => {
+  let successMessage, failureMessage;
+  successMessage = "success!";
+  failureMessage = "something went wrong";
+
+  db.all(query, (err, row) => {
+    try {
+      res.send(row);
+    } catch (error) {
+      console.error(failureMessage, error);
+    }
+  });
+});
+
 app.post("/query", cors(), (req, res) => {
   console.log(`REQ::body -> ${Object.keys(req.body)}`);
   // Object destructuring
